@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sentiment Analysis Web App</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+</head>
+
+<body>
+
+    <main class="page-wrapper">
+
+        <section class="hero-section">
+            <div class="badge">QSkill Python Development Internship</div>
+
+            <h1>Sentiment Analysis Web App</h1>
+
+            <p class="subtitle">
+                Analyze any sentence and identify whether the sentiment is
+                positive, negative, or neutral using TextBlob.
+            </p>
+        </section>
+
+        <section class="analysis-card">
+
+            <form method="POST">
+
+                <label for="user_text">Enter your text</label>
+
+                <textarea
+                    id="user_text"
+                    name="user_text"
+                    rows="7"
+                    placeholder="Example: This application is amazing and easy to use."
+                    required
+                >{{ user_text }}</textarea>
+
+                <button type="submit">
+                    Analyze Sentiment
+                </button>
+
+            </form>
+
+            {% if error %}
+                <div class="message error-message">
+                    {{ error }}
+                </div>
+            {% endif %}
+
+            {% if result %}
+                <div class="result-card {{ result.css_class }}">
+
+                    <div class="result-heading">
+                        <span class="result-emoji">
+                            {{ result.emoji }}
+                        </span>
+
+                        <div>
+                            <p class="small-label">Detected sentiment</p>
+                            <h2>{{ result.sentiment }}</h2>
+                        </div>
+                    </div>
+
+                    <div class="score-grid">
+
+                        <div class="score-box">
+                            <p>Polarity Score</p>
+                            <strong>{{ result.polarity }}</strong>
+                            <span>-1 means negative, +1 means positive</span>
+                        </div>
+
+                        <div class="score-box">
+                            <p>Subjectivity Score</p>
+                            <strong>{{ result.subjectivity }}</strong>
+                            <span>0 means objective, 1 means subjective</span>
+                        </div>
+
+                    </div>
+
+                </div>
+            {% endif %}
+
+        </section>
+
+        <section class="info-grid">
+
+            <article class="info-card">
+                <h3>Positive</h3>
+                <p>
+                    Polarity greater than 0 indicates positive sentiment.
+                </p>
+            </article>
+
+            <article class="info-card">
+                <h3>Neutral</h3>
+                <p>
+                    Polarity equal to 0 indicates neutral sentiment.
+                </p>
+            </article>
+
+            <article class="info-card">
+                <h3>Negative</h3>
+                <p>
+                    Polarity less than 0 indicates negative sentiment.
+                </p>
+            </article>
+
+        </section>
+
+    </main>
+
+</body>
+</html>
